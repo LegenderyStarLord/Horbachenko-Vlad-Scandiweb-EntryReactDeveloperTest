@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/css/main.23b8c1b7.css",
+    "main.js": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/js/main.7349bdb0.js",
+    "static/js/787.6dc9d4b4.chunk.js": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/js/787.6dc9d4b4.chunk.js",
+    "index.html": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/index.html",
+    "main.23b8c1b7.css.map": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/css/main.23b8c1b7.css.map",
+    "main.7349bdb0.js.map": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/js/main.7349bdb0.js.map",
+    "787.6dc9d4b4.chunk.js.map": "/Horbachenko-Vlad-Scandiweb-EntryReactDeveloperTest/static/js/787.6dc9d4b4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.23b8c1b7.css",
+    "static/js/main.7349bdb0.js"
+  ]
+}
