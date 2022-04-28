@@ -1,0 +1,45 @@
+.slider-container {
+  position: relative;
+}
+
+.cart-img {
+  width: 180px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.vector-container {
+  position: absolute;
+  cursor: pointer;
+  width: 23px;
+  height: 23px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 20px;
+  &:hover {
+    transition: 0.5s;
+    background-color: rgba(0, 0, 0, 1);
+  }
+}
+
+.vector-right-container {
+  right: 15px;
+}
+
+.vector-left-container {
+  right: 45px;
+}
+
+.slider-vector {
+  height: 12px;
+  width: 9px;
+  margin-top: 6px;
+}
+
+.vector-left {
+  margin-left: -1px;
+}
+
+.vector-right {
+  margin-left: 2px;
+}

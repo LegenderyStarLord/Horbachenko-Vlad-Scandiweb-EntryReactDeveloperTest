@@ -1,0 +1,85 @@
+.cards-container-wrapper {
+  max-width: 90rem;
+  margin: 0 auto;
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  .category-name {
+    margin-top: 0;
+    padding-top: 50px;
+    text-transform: capitalize;
+    padding-left: 75px;
+    font-weight: 400;
+    font-size: 42px;
+  }
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product-card {
+  font-size: 18px;
+  width: 26.12rem;
+  max-height: 29.75rem;
+  margin: 10px 10px 40px 10px;
+  &:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    cursor: pointer;
+  }
+  &:hover .addToCartBtn{
+    display: inline-block;
+  }
+  h4 {
+    margin-bottom: 10px;
+    margin-left: 9px;
+  }
+  p {
+    margin-top: 0;
+    margin-left: 9px;
+  }
+  .img-container {
+    margin: 8px;
+    position: relative;
+  }
+  img {
+    height: 23rem;
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 0;
+  }
+  .addToCartBtn {
+    display: none;
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none;
+    bottom: -22px;
+    right: 10px;
+    cursor: pointer;
+    img {
+      width: 52px;
+      height: 52px;
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.out-of-stock-product {
+  position: relative;
+  opacity: 0.5;
+}
+
+.out-of-stock-text {
+  margin: 0;
+  opacity: 1;
+  z-index: 1;
+  position: absolute;
+  top: 180px;
+  left: 110px;
+  font-size: 24px;
+}
