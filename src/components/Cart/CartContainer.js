@@ -7,7 +7,7 @@ class CartContainer extends React.Component {
     render() {
 
         const { cartItems, currentCurrencyIndex, onAddItemQuantity, onRemoveItemQuantity,
-                totalPrice, selectedOptions, onOrderItems} = this.props;
+                totalPrice, onOrderItems} = this.props;
 
         return (
             <Cart
@@ -16,7 +16,6 @@ class CartContainer extends React.Component {
                 onAdd={onAddItemQuantity}
                 onRemove={onRemoveItemQuantity}
                 totalPrice={totalPrice}
-                selectedOptions={selectedOptions}
                 onOrderItems={onOrderItems}
             />
         )
@@ -29,7 +28,6 @@ let mapStateToProps = (state) => {
         cartItems: state.cart.cartItems,
         currentCurrencyIndex: state.cart.currentCurrency,
         totalPrice: state.cart.totalPrice,
-        selectedOptions: state.cart.selectedOptions
     }
 };
 

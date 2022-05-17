@@ -10,7 +10,7 @@ class MiniCartContainer extends React.Component {
     render() {
 
         const { cartItems, currentCurrencyIndex, isMiniCartActive, onAddItemQuantity, onRemoveItemQuantity,
-                setTotalPrice, totalPrice, navigate, setMiniCartActive, selectedOptions } = this.props;
+                setTotalPrice, totalPrice, navigate, setMiniCartActive } = this.props;
 
         return(
             <MiniCart
@@ -23,7 +23,6 @@ class MiniCartContainer extends React.Component {
                 totalPrice={totalPrice}
                 navigate={navigate}
                 setMiniCartActive={setMiniCartActive}
-                selectedOptions={selectedOptions}
             />
         )
     }

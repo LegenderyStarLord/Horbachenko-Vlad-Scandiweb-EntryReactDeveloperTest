@@ -9,16 +9,19 @@ class MiniCart extends React.Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
+    rounded(number){
+        return +number.toFixed(2);
+    }
 
     componentDidMount() {
-        {this.props.active ? document.body.style.overflow = "hidden" : document.body.style.overflow = "visible"}
+        this.props.active ? document.body.style.overflow = "hidden" : document.body.style.overflow = "visible"
         document.addEventListener("mousedown", this.handleClickOutside);
         this.props.setTotalPrice(this.props.cartItems.reduce((a,c) => a + c.prices[this.props.currentCurrency].amount * c.quantity, 0))
     }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        {this.props.active ? document.body.style.overflow = "hidden" : document.body.style.overflow = "visible"}
+        this.props.active ? document.body.style.overflow = "hidden" : document.body.style.overflow = "visible"
         this.props.setTotalPrice(this.props.cartItems.reduce((a,c) => a + c.prices[this.props.currentCurrency].amount * c.quantity, 0))
 }
 
@@ -34,23 +37,24 @@ class MiniCart extends React.Component {
     }
 
     render() {
-        const { cartItems, currentCurrency, active, onAdd, onRemove, totalPrice, selectedOptions } = this.props;
+        const { cartItems, currentCurrency, active, onAdd, onRemove, totalPrice } = this.props;
         const currencySymbol = cartItems[0]?.prices[currentCurrency].currency.symbol;
+
         return (
             <div  className={active ? "mini-cart-wrapper" : null}>
             <div ref={this.wrapperRef} className={ active ? "mini-cart active" : "mini-cart"}>
-                <p className={"items-qty"}><strong>My Bag,</strong> {cartItems.length} items</p>
+                <p className={"items-qty"}><strong>My Bag,</strong> {cartItems.reduce(function(previousValue, currentValue) {
+                    return previousValue + currentValue.quantity;}, 0)} items</p>
                     {cartItems?.map((item) => {
                         return (
-                            <div key={item.id} className={"mini-cart-item"}>
+                            <div key={item.productId} className={"mini-cart-item"}>
                                 <div className={"mini-cart-info"}>
                                     <p className={"name"}>{item.name}</p>
                                     <p className={"brand-name"}>{item.brand}</p>
                                     <p className={"price"}>
-                                        <span>{item.prices[currentCurrency].currency.symbol}</span>{item.prices[currentCurrency].amount}
+                                        <span>{item.prices[currentCurrency].currency.symbol}</span>{this.rounded(item.prices[currentCurrency].amount * item.quantity)}
                                     </p>
                                     <div className={"options"}>
-
                                         {
                                             item.attributes.map((atr) => {
                                                 return (
@@ -58,8 +62,8 @@ class MiniCart extends React.Component {
                                                     <p className={"atr-name"}>{atr.name}:</p>
                                                         <div className={"atr-options-container"}>
                                                         {atr.items.map((atrItem) => {
-                                                          let found =  selectedOptions?.some(function (option) {
-                                                              return option.id === item.id &&  option.name === atr.name && option.value === atrItem.value
+                                                          let found =  item.selectedOptions?.some(function (option) {
+                                                              return option.id === item.id && option.name === atr.name && option.value === atrItem.value
                                                           })
                                                                     return (
                                                                         found
@@ -80,12 +84,12 @@ class MiniCart extends React.Component {
                                     </div>
                                 </div>
                                 <div className={"add-remove-buttons"}>
-                                    <button onClick={() => onAdd(item.id)}>+</button>
+                                    <button onClick={() => onAdd(item.productId)}>+</button>
                                     <p>{item.quantity}</p>
-                                    <button onClick={() => onRemove(item.id)}>-</button>
+                                    <button onClick={() => onRemove(item.productId)}>-</button>
                                 </div>
-                                <div>
-                                    <img className={"mini-cart-img"} src={item.gallery[0]} alt={"image"}/>
+                                <div className={"mini-cart-img-container"}>
+                                    <span className="helper"/><img className={"mini-cart-img"} src={item.gallery[0]} alt={"product"}/>
                                 </div>
                             </div>
                         )

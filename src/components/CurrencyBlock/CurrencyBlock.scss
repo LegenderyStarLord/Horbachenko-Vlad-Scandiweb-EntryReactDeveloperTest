@@ -22,7 +22,7 @@
       font-weight: 500;
       font-size: 15px;
       &:active {
-        background-color: #efebeb;
+        background-color: #d0c8c8;
       }
     }
   }
@@ -37,6 +37,9 @@
 
 .currency-sub-container{
   display: inline-block;
+  &:hover {
+    background-color: #EEEEEE;
+  }
   width: 123.2px;
   p {
     margin: 6px 0 0;

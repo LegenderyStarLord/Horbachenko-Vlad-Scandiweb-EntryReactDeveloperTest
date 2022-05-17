@@ -18,7 +18,7 @@ class ProductListContainer extends React.Component {
 
     render() {
 
-        const { setCartItems, requestedCategoryProducts, currentCategory, currentCurrencyIndex, setSelectedOptions } = this.props;
+        const { setCartItems, requestedCategoryProducts, currentCategory, currentCurrencyIndex, setSelectedOptions, cartItems } = this.props;
 
         return (
             <ProductList
@@ -27,6 +27,7 @@ class ProductListContainer extends React.Component {
                 categoryName={currentCategory}
                 currentCurrency={currentCurrencyIndex}
                 setSelectedOptions={setSelectedOptions}
+                cartItems={cartItems}
             />
         )
     }
@@ -36,7 +37,8 @@ let mapStateToProps = (state) => {
     return {
         requestedCategoryProducts: state.categoriesProducts.requestedCategoryProducts,
         currentCategory: state.categoriesProducts.currentCategory,
-        currentCurrencyIndex: state.cart.currentCurrency
+        currentCurrencyIndex: state.cart.currentCurrency,
+        cartItems: state.cart.cartItems
     }
 }
 

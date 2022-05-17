@@ -6,19 +6,27 @@ import addToCartBtn from "../../assets/Circle Icon.png";
 
 class ProductList extends React.Component {
 
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
     OnAddToCart = (e, product) => {
         e.stopPropagation();
 
-        product.attributes.map((atr) => {
-            let id = product.id;
-            let value = atr.items[0].value;
-            let name = atr.name;
-            return this.props.setSelectedOptions(name, value, id);
-        })
+        if(product.inStock) {
+           let options =  product.attributes.map((atr) => {
+                let id = product.id;
+                let value = atr.items[0].value;
+                let name = atr.name;
+              return {name: name, value: value, id: id }
+            })
 
-        let productItem =  {...product};
-        productItem.quantity = 1;
-        this.props.onItemAdd(productItem);
+            let productItem =  {...product};
+            productItem.quantity = 1;
+            productItem.selectedOptions = options;
+            productItem.productId = this.getRandomInt(1000);
+            this.props.onItemAdd(productItem);
+        }
     }
 
     render() {
@@ -38,8 +46,9 @@ class ProductList extends React.Component {
                                 : <p className={"out-of-stock-text"}>OUT OF STOCK</p>
                             }
                             <div className={"img-container"}>
-                                <img src={product.gallery[0]} alt={"product-image"}/>
-                                <button onClick={(e) => this.OnAddToCart(e, product)} className={"addToCartBtn"}>
+                                <img src={product.gallery[0]} alt={"product"}/>
+                                <button onClick={(e) => this.OnAddToCart(e, product)}
+                                        className={"addToCartBtn"}>
                                     <img  src={addToCartBtn} alt={"addToCartBtn"}/>
                                 </button>
                             </div>

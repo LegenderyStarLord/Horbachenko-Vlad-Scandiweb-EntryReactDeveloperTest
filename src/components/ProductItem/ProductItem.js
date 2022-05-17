@@ -1,6 +1,6 @@
 import React from "react";
 import "./ProductItem.scss";
-
+import DOMPurify from 'dompurify';
 
 class ProductItem extends React.Component {
     constructor(props) {
@@ -9,13 +9,31 @@ class ProductItem extends React.Component {
             currentImg: 0,
             selected: false,
             descriptionLength: 300,
-            sideImgHeight: "370px"
+            sideImgHeight: "370px",
+            selectedOptions: [],
         }
+        this.myRef = React.createRef();
+    }
+
+    componentDidMount() {
+        if(this.props.productInfo) {
+            this.myRef.current.innerHTML = DOMPurify.sanitize(this.props.productInfo.description.substring(0, this.state.descriptionLength));
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.productInfo) {
+            this.myRef.current.innerHTML = DOMPurify.sanitize(this.props.productInfo.description.substring(0, this.state.descriptionLength));
+        }
+    }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
     }
 
     handleImgChange = (e) => {
         let id = e.currentTarget.id;
-        this.setState({currentImg: this.state.currentImg = id});
+        this.setState({currentImg: id});
     };
 
     toggleReadMore = () => {
@@ -31,29 +49,56 @@ class ProductItem extends React.Component {
     }
 
     onSelect = (e) => {
+        if(this.state.selectedOptions.filter(el => el.name === e.currentTarget.name && el.id === e.currentTarget.id).length > 0) {
+            this.state.selectedOptions.map((item) => item.id === e.currentTarget.id && item.name === e.currentTarget.name && item.value !== e.currentTarget.value
+                ? item.value = e.currentTarget.value
+                : item
+            );
+        } else {
+            this.setState({...this.state, selectedOptions: [...this.state.selectedOptions, {name: e.currentTarget.name, value: e.currentTarget.value, id: e.currentTarget.id}] })
+            }
+
         this.setState({selected: true})
-        let selectedValue = e.currentTarget.value;
-        let selectedName = e.currentTarget.name;
-        let id = e.currentTarget.id;
-        this.props.setSelectedOptions(selectedName, selectedValue, id);
     };
+
+
 
     onAddItemToCart = (productInfo) => {
         document.querySelectorAll('input[type="radio"]')
             .forEach(el => el.checked = false);
 
+        productInfo.attributes.map((atr) => {
+            let id = productInfo.id;
+            let value = atr.items[0].value;
+            let name = atr.name;
+            return {id: id, value: value, name: name};
+        })
+
+        let order = productInfo.attributes.map((atr) => {
+            return atr.name
+        })
+
+        let orderedOptions = this.state.selectedOptions;
+        orderedOptions.sort(function(a, b) {
+            return order.indexOf(a.name) - order.indexOf(b.name);
+        })
+
         if(!this.state.selected) {
-            productInfo.attributes.map((atr) => {
-                let id = productInfo.id;
-                let value = atr.items[0].value;
-                let name = atr.name;
-                return this.props.setSelectedOptions(name, value, id);
-            })
+            let product =  {...productInfo};
+            product.quantity = 1;
+            product.selectedOptions = orderedOptions;
+            product.productId = this.getRandomInt(1000);
+            this.props.onItemAdd(product);
+        } else {
+            let product =  {...productInfo};
+
+            product.quantity = 1;
+            product.productId = this.getRandomInt(1000);
+            product.selectedOptions = orderedOptions;
+            this.props.onItemAdd(product);
+            this.setState({...this.state, selectedOptions: []})
+            this.setState({selected: false})
         }
-        let product =  {...productInfo};
-        product.quantity = 1;
-        this.props.onItemAdd(product);
-        this.setState({selected: false})
 
     };
 
@@ -61,7 +106,7 @@ class ProductItem extends React.Component {
     render() {
 
         const { productInfo, currentCurrency } = this.props;
-        const { sideImgHeight, currentImg, descriptionLength } = this.state;
+        const { sideImgHeight, currentImg, descriptionLength, selectedOptions } = this.state;
 
         return (
             <div className={"productInfo-wrapper"}>
@@ -76,8 +121,7 @@ class ProductItem extends React.Component {
                                 <li key={index}
                                     id={index}
                                     onClick={(e) => this.handleImgChange(e)}
-                                ><img className={"list-img"}
-                                      src={img} alt={"image"}/>
+                                ><img className={"list-img"} src={img} alt={"product"}/>
                                 </li>
                             )
                         })}
@@ -88,8 +132,14 @@ class ProductItem extends React.Component {
                         </button>
                         : ""}
                 </div>
+                <div className={ productInfo?.inStock ? "pdp-main-img-container" : "pdp-main-img-container pdp-out-of-stock-product "}>
+                    {productInfo?.inStock
+                        ? ""
+                        : <p className={"pdp-out-of-stock-text"}>OUT OF STOCK</p>
+                    }
+                    <img className={"main-img"} src={productInfo?.gallery[currentImg]} alt={"product"}/>
+                </div>
 
-                <img className={"main-img"} src={productInfo?.gallery[currentImg]} alt={"product-picture"}/>
                 <div className={"product-item-info"}>
                     <h1>{productInfo?.name}</h1>
                     <p className={"brand-name"}>{productInfo?.brand}</p>
@@ -143,11 +193,11 @@ class ProductItem extends React.Component {
                             {productInfo?.prices[currentCurrency].amount}
                         </div>
                     </div>
-                    <button className={"add-to-cart-btn"} onClick={() => this.onAddItemToCart(productInfo)}>ADD TO CART</button>
+                    <button disabled={productInfo?.attributes.length !== selectedOptions?.length || !productInfo?.inStock } className={"add-to-cart-btn"} onClick={() => this.onAddItemToCart(productInfo)}>ADD TO CART</button>
                     <div className={"description-container"}>
                         <p className={"product-description-info"}
-                           dangerouslySetInnerHTML={{__html: productInfo?.description.substring(0, descriptionLength)}}
-                        />
+                           ref={this.myRef}
+                        >""</p>
                         {productInfo?.description.length >= 300
                             ? <span className={"read-more-btn"}
                                     onClick={() => this.toggleReadMore()}

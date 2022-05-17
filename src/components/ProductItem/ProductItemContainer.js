@@ -4,6 +4,7 @@ import { withRouter } from "../../ReactRouterWrapper/ReactRouterWrapper";
 import {getRequestedProduct} from "../../redux/productsReducer";
 import {setCartItems, setSelectedOptions} from "../../redux/cartReducer";
 import {connect} from "react-redux";
+
 class ProductItemContainer extends React.Component {
 
     componentDidMount() {

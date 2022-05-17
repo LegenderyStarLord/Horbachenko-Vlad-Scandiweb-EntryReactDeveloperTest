@@ -56,7 +56,7 @@ export const getRequestedCategoryProducts = (name) => {
     return async (dispatch) => {
         let response = await  client.query({query: GET_REQUESTED_CATEGORY_PRODUCTS, variables: {categoryName: name}});
         dispatch(setRequestedCategoryProducts(response.data.category.products));
-        dispatch(setCurrentCategory(response.data.name));
+        dispatch(setCurrentCategory(response.data.name))
     }
 }
 

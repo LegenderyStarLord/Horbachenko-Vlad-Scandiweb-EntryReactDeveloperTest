@@ -26,8 +26,10 @@ let initialState = {
 
 const cartReducer  = (state = initialState, action ) => {
     const item = state.cartItems.find(
-        product => product.id === action.id
+        product => product.productId === action.productId
     );
+
+
     switch(action.type) {
 
         case SET_CURRENCIES_LIST:
@@ -63,11 +65,22 @@ const cartReducer  = (state = initialState, action ) => {
             }
 
         case SET_CART_ITEMS:
-            if(!state.cartItems.some((item) => item.id === action.item.id)) {
-                return  {...state, cartItems: [...state.cartItems, action.item]}
+            if(state.cartItems.some((item) => item.id === action.item.id && item.name === action.item.name && JSON.stringify(item.selectedOptions) === JSON.stringify(action.item.selectedOptions) )) {
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map((item) => item.id === action.item.id && item.name === action.item.name && JSON.stringify(item.selectedOptions) === JSON.stringify(action.item.selectedOptions)
+                        ? {
+                            ...item,
+                            quantity: item.quantity + 1,
+                            totalPrice: state.totalPrice + item.prices[state.currentCurrency].amount
+                        }
+                        : item
+                    ),
+
+                };
             }
 
-            return {...state, cartItems: [...state.cartItems]}
+            return {...state, cartItems: [...state.cartItems, action.item]}
 
         case SET_TOTAL_PRICE:
             return {...state, totalPrice: action.price}
@@ -77,7 +90,7 @@ const cartReducer  = (state = initialState, action ) => {
             if(item) {
                 return {
                     ...state,
-                    cartItems: state.cartItems.map((item) => item.id === action.id
+                    cartItems: state.cartItems.map((item) => item.productId === action.productId
                         ? {
                             ...item,
                             quantity: item.quantity + 1,
@@ -93,13 +106,12 @@ const cartReducer  = (state = initialState, action ) => {
         case REMOVE_ITEM_QUANTITY:
             if (item.quantity === 1) {
                 return {
-                    ...state, cartItems: state.cartItems.filter((item) => item.id !== action.id),
-                    selectedOptions: state.selectedOptions.filter((item) => item.id !== action.id)
+                    ...state, cartItems: state.cartItems.filter((item) => item.productId !== action.productId),
                 }
             } else {
                 return {
                     ...state,
-                    cartItems: state.cartItems.map((item) => item.id === action.id
+                    cartItems: state.cartItems.map((item) => item.productId === action.productId
                         ? {
                             ...item,
                             quantity: item.quantity - 1,
@@ -118,8 +130,8 @@ const cartReducer  = (state = initialState, action ) => {
 
 
 export const setCartItems = (item) => ({type: SET_CART_ITEMS, item});
-export const onAddItemQuantity = (id) => ({type: ADD_ITEM_QUANTITY, id});
-export const onRemoveItemQuantity = (id) => ({type: REMOVE_ITEM_QUANTITY, id});
+export const onAddItemQuantity = (productId) => ({type: ADD_ITEM_QUANTITY, productId});
+export const onRemoveItemQuantity = (productId) => ({type: REMOVE_ITEM_QUANTITY, productId});
 export const setTotalPrice = (price) => ({type: SET_TOTAL_PRICE, price});
 export const setCurrenciesLIst = (currenciesList) => ({type: SET_CURRENCIES_LIST, currenciesList});
 export const setCurrentCurrency = (currentCurrency) => ({type: SET_CURRENT_CURRENCY, currentCurrency});

@@ -27,16 +27,24 @@ class Slider extends React.Component {
     render() {
 
         const { itemGallery } = this.props;
+        const { imgIndex } = this.state;
 
         return (
             <div className={"slider-container"}>
-                <img className={"cart-img"} src={itemGallery[this.state.imgIndex]} alt={"image"}/>
-                <div onClick={() => this.sliderClickLeft(itemGallery)} className={"vector-left-container vector-container"}>
-                    <img className={"slider-vector vector-left"} src={vectorLeft} alt={"slider-vector-img"}/>
-                </div>
-                <div onClick={() => this.sliderClickRight(itemGallery)} className={"vector-right-container vector-container"}>
-                    <img className={"slider-vector vector-right"} src={vectorRight} alt={"slider-vector-img"}/>
-                </div>
+                <img className={"cart-img"} src={itemGallery[imgIndex]} alt={"product"}/>
+                { itemGallery.length > 1
+                    ?
+                    <div>
+                        <div onClick={() => this.sliderClickLeft(itemGallery)} className={"vector-left-container vector-container"}>
+                            <img className={"slider-vector vector-left"} src={vectorLeft} alt={"slider-vector-img"}/>
+                        </div>
+                        <div onClick={() => this.sliderClickRight(itemGallery)} className={"vector-right-container vector-container"}>
+                            <img className={"slider-vector vector-right"} src={vectorRight} alt={"slider-vector-img"}/>
+                        </div>
+                    </div>
+                    : null
+                }
+
             </div>
         )
     }

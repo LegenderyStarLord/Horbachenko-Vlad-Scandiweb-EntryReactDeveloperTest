@@ -65,7 +65,8 @@ class Header extends React.Component {
                         <button className={"cart-btn"} onClick={() => this.setMiniCartActive()}>
                             <img id={"cart-img"} className={"cart-img"} src={cartImg} alt={"cart-img"}/>
                             {cartItems.length > 0
-                                ? <div className={"cart-img-hat"}><p>{cartItems.length}</p></div>
+                                ? <div className={"cart-img-hat"}><p>{cartItems.reduce(function(previousValue, currentValue) {
+                                    return previousValue + currentValue.quantity;}, 0)}</p></div>
                                 : null
                             }
                         </button>
@@ -76,6 +77,6 @@ class Header extends React.Component {
             </div>
         )
     }
-};
+}
 
 export default Header;

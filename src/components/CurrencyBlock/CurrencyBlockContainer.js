@@ -4,8 +4,9 @@ import CurrencyBlock from "./CurrencyBlock";
 import {getCurrencies, setCurrentCurrency} from "../../redux/cartReducer";
 
 class CurrencyBlockContainer extends React.Component {
+
     componentDidMount() {
-        this.props.getCurrencies();
+        this.props.getCurrencies()
     }
 
     render() {
