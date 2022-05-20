@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CurrencyBlock from "./CurrencyBlock";
-import {getCurrencies, setCurrentCurrency} from "../../redux/cartReducer";
+import {getCurrencies, setCurrencyBlockActive, setCurrentCurrency} from "../../redux/cartReducer";
 
 class CurrencyBlockContainer extends React.Component {
 
@@ -11,13 +11,14 @@ class CurrencyBlockContainer extends React.Component {
 
     render() {
 
-        const {currenciesList, isCurrencyBlockActive, setCurrentCurrency} = this.props;
+        const {currenciesList, isCurrencyBlockActive, setCurrentCurrency, setCurrencyBlockActive} = this.props;
 
         return (
             <CurrencyBlock
                 currencies={currenciesList}
                 active={isCurrencyBlockActive}
                 setCurrentCurrency={setCurrentCurrency}
+                setCurrencyBlockActive={setCurrencyBlockActive}
             />
         )
     }
@@ -30,4 +31,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {getCurrencies, setCurrentCurrency})(CurrencyBlockContainer);
+export default connect(mapStateToProps, {getCurrencies, setCurrentCurrency, setCurrencyBlockActive})(CurrencyBlockContainer);

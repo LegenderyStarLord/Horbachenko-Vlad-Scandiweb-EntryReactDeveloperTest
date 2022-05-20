@@ -14,15 +14,16 @@
 }
 
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 26.12rem);
+  grid-gap: 50px 80px;
+
 }
 
 .product-card {
   font-size: 18px;
   width: 26.12rem;
-  max-height: 29.75rem;
+  max-height: 36rem;
   margin: 10px 10px 40px 10px;
   &:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
@@ -44,10 +45,10 @@
     position: relative;
   }
   img {
-    height: 23rem;
-    width: 100%;
+    height: 27rem;
+    width: 25rem;
     object-fit: cover;
-    object-position: 100% 0;
+    object-position: 50% 10%;
   }
   .addToCartBtn {
     display: none;

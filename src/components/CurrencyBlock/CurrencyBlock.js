@@ -2,6 +2,7 @@ import React from "react";
 import "./CurrencyBlock.scss";
 
 
+
 class CurrencyBlock extends React.Component {
     handleCurrencyChange = (e) => {
         let chosenCurrency = e.currentTarget.value;
@@ -10,15 +11,15 @@ class CurrencyBlock extends React.Component {
 
     render() {
 
-        const { active, currencies } = this.props;
+        const { active, currencies, setCurrencyBlockActive } = this.props;
 
         return (
             <div id={"currency-block"} className={active ? "currency-block active" : "currency-block"}>
                 <div className={"currency-list"}>
                     {currencies?.map((currency, index) => {
                         return (
-                            <div className={"currency-container"} key={currency.label}>
-                                <label className={"currency-label"}>
+                            <div onClick={() => setCurrencyBlockActive()} className={"currency-container"} key={currency.label}>
+                                <label  className={"currency-label"}>
                                     <input className={"currency-input"}
                                            name={"currencyOption"}
                                            value={index}
