@@ -22,15 +22,21 @@
 
 .product-card {
   font-size: 18px;
-  width: 26.12rem;
-  max-height: 36rem;
+  width: 24rem;
+  //min-height: 26rem;
   margin: 10px 10px 40px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   &:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     cursor: pointer;
   }
   &:hover .addToCartBtn{
     display: inline-block;
+  }
+  .product-name-price {
+    margin-top: auto;
   }
   h4 {
     margin-bottom: 10px;
@@ -39,14 +45,19 @@
   p {
     margin-top: 0;
     margin-left: 9px;
+    margin-bottom: 30px;
   }
   .img-container {
-    margin: 8px;
+    margin: auto 8px;
     position: relative;
+    text-align: center;
+
   }
   img {
-    height: 27rem;
-    width: 25rem;
+    //height: 35rem;
+    //height: 100%;
+    margin-top: 8px;
+    width: 15rem;
     object-fit: cover;
     object-position: 50% 10%;
   }

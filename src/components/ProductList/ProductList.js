@@ -52,11 +52,12 @@ class ProductList extends React.Component {
                                     <img  src={addToCartBtn} alt={"addToCartBtn"}/>
                                 </button>
                             </div>
-                            <h4>{product.brand}</h4>
-                            <h4>{product.name}</h4>
-                            <p>
-                                <span>{product.prices[currentCurrency].currency.symbol}</span>{product.prices[currentCurrency].amount}
-                            </p>
+                            <div className={"product-name-price"}>
+                                <h4>{product.brand} {product.name}</h4>
+                                <p>
+                                    <span>{product.prices[currentCurrency].currency.symbol}</span>{product.prices[currentCurrency].amount}
+                                </p>
+                            </div>
                         </div>
                     )
                 })}
